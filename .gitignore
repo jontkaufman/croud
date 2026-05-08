@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated review screenshots (large; tracked separately if desired)
+# Comment out the next line to track screenshots in git
+reviews/**/screenshots/
+
+# Local secrets / scratch
+.env
+scratch/
+.gstack/
+
+# Personal archives (excluded from public repo)
+# Place any persona files, review runs, or dev artifacts you want to keep locally but not publish here.
+personas-archive-*/
+reviews-archive-*/
+docs-archive-*/
+
+# Local git backups (safety nets created during repo cleanup)
+.git-backup-*/
+
+# Local Claude/Codex settings — keep your own keys/permissions out of the public repo
+.claude/settings.local.json
