@@ -109,7 +109,7 @@ In the Claude Code chat, type:
 Claude will:
 
 1. Check your Python environment and install dependencies if missing.
-2. Ask you ~5 short questions: what you want to review, who your target audience is, how many personas to generate, etc.
+2. Ask you ~5 short questions: what you want to review, who your target audience is, how many personas to generate (recommended to start with 5), etc.
 3. Generate a starter persona library tailored to your audience.
 4. Hand you the exact command for your first review.
 
@@ -127,6 +127,7 @@ After setup, you can talk to Claude in plain English. Examples:
 | `review example.com with 5 personas` | Random sample of 5 personas. |
 | `review example.com with everyone` | Full library reviews. (Asks to confirm cost first.) |
 | `review example.com with <tag>` | Filter by tag (e.g. `mobile-first` or `over-50`). |
+| `/improve example.com` | Turn the latest review into a prioritized action plan. Optional: auto-create GitHub issues + schedule a re-review. |
 | `generate 10 personas — <description>` | Add more personas to your library later. |
 | `list personas tagged <tag>` | Roster query. |
 | `show last review of example.com` | Reload the most recent run. |

@@ -26,6 +26,7 @@ The user will speak naturally. Map their request to one of these actions:
 | `have <slug> visit <url> again` | Return run; load prior visit log as context |
 | `have <slug> visit <url> N times over <period>` | Sequenced returns (return-1, return-2, ...) |
 | `compare review of <url> between <run-id-1> and <run-id-2>` | Diff report (out of scope for v1) |
+| `/improve <url>` / `improve <url>` / `what should I fix on <url>` | Invoke the `skills/improve.md` skill — generates a prioritized improvement plan from the latest run, with optional GitHub-issue creation and scheduled re-review |
 | `generate N personas` | Invoke skills/generate-persona.md, random mode |
 | `generate N personas — <tag-spec>` | Generator, tag-spec mode |
 | `fill gaps in the persona library` | Generator, fill-gaps mode |
@@ -92,11 +93,13 @@ Estimates: assume ~$0.10–$0.30 per subagent depending on site complexity and s
 - `system/diversity-matrix.md` — axes of variation
 - `system/review-schema.md` — required structure for every review file
 - `system/report-schema.md` — required structure for the aggregate report
+- `system/improvement-plan-schema.md` — required structure for `/improve` output
 - `system/browsing-protocol.md` — how persona-review subagents operate
 - `personas/_index.md` — machine-readable roster
 - `personas/<slug>.md` — individual persona bios (frozen once written)
 - `skills/setup.md` — first-run onboarding skill (invoked by `/setup`)
 - `skills/generate-persona.md` — the persona generator skill
+- `skills/improve.md` — review-to-action plan generator (invoked by `/improve`)
 - `scripts/validate_persona.py` — persona schema validator
 - `scripts/validate_review.py` — review schema validator
 - `reviews/<site>/<run_id>/` — every run, never overwritten
