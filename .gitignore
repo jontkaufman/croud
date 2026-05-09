@@ -34,5 +34,11 @@ docs-archive-*/
 # Local git backups (safety nets created during repo cleanup)
 .git-backup-*/
 
+# Persona subfolders ("groups"). Public repo ships with personas/ empty
+# except _index.md; users organize their own libraries in subfolders.
+# Each user's groups are their own — gitignored by default. Comment out
+# any line below if you intentionally want to share a group publicly.
+personas/*/
+
 # Local Claude/Codex settings — keep your own keys/permissions out of the public repo
 .claude/settings.local.json

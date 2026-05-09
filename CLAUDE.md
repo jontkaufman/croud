@@ -19,9 +19,10 @@ The user will speak naturally. Map their request to one of these actions:
 | `review <url>` | Random sample of 50 personas (or current default), fresh runs |
 | `review <url> with N personas` | Random sample of N |
 | `review <url> as <slug>` | Single named persona |
-| `review <url> with <tag>` | All personas matching the tag |
+| `review <url> with <group>` | All personas in `personas/<group>/` (e.g. `with construction`, `with rv`, `with general`). Resolves folder first; falls back to tag if no folder matches |
+| `review <url> with <tag>` | All personas matching the tag (across all subfolders) |
 | `review <url> with <tag1> AND <tag2>` | Intersection of tags |
-| `review <url> with everyone` | Full library (cost-gated — confirm first) |
+| `review <url> with everyone` | Full library, ALL subfolders (cost-gated — confirm first) |
 | `review <url> — N fresh runs per persona` | Each persona reviewed N times by N independent fresh subagents |
 | `have <slug> visit <url> again` | Return run; load prior visit log as context |
 | `have <slug> visit <url> N times over <period>` | Sequenced returns (return-1, return-2, ...) |
@@ -39,7 +40,12 @@ If the user's phrasing is ambiguous, ask one clarifying question before acting.
 
 ## How to run a review
 
-1. **Resolve persona selection** from the user's request (single, sample, tag, full).
+1. **Resolve persona selection** from the user's request (single, sample, group, tag, full).
+   - Single: `as <slug>` → glob `personas/**/<slug>.md` (subfolders allowed; slug is unique).
+   - Group: `with <group>` → glob `personas/<group>/*.md` (excluding `_index.md`).
+   - Tag: `with <tag>` → walk every per-group `_index.md` and filter rows where `tags` contains the requested tag.
+   - Full: `with everyone` → glob `personas/**/*.md` (excluding `_index.md`).
+   - Sample: shuffle the resolved set, take N.
 2. **Cost gate**: if the run will exceed 50 subagent invocations (e.g. 25 personas × 5 fresh runs), STOP and ask the user to confirm with an estimated cost/duration.
 3. **Compute the run_id**: `YYYY-MM-DD-HHMM-<selector>-<runtype>` (see spec section 10).
 4. **Create the run folder**: `reviews/<site-domain>/<run_id>/` with subfolders `reviews/` and `screenshots/`.
@@ -95,8 +101,10 @@ Estimates: assume ~$0.10–$0.30 per subagent depending on site complexity and s
 - `system/report-schema.md` — required structure for the aggregate report
 - `system/improvement-plan-schema.md` — required structure for `/improve` output
 - `system/browsing-protocol.md` — how persona-review subagents operate
-- `personas/_index.md` — machine-readable roster
-- `personas/<slug>.md` — individual persona bios (frozen once written)
+- `personas/_index.md` — top-level roster (public scaffold; usually empty in fresh installs)
+- `personas/<group>/` — domain-or-use-case subfolders (e.g. `construction/`, `rv/`, `general/`). Each subfolder is gitignored by default — a personal working library, not pushed publicly.
+- `personas/<group>/_index.md` — per-group roster (auto-generated from the persona files in that folder)
+- `personas/<group>/<slug>.md` — individual persona bios (frozen once written)
 - `skills/setup.md` — first-run onboarding skill (invoked by `/setup`)
 - `skills/generate-persona.md` — the persona generator skill
 - `skills/improve.md` — review-to-action plan generator (invoked by `/improve`)
